@@ -26,7 +26,7 @@ happened while you worked. This is about your process, not trying to sound perfe
 - Give one example of an AI suggestion that was correct (including what the AI suggested
   and how you verified the result).
     - I'm experimenting with setting up a monorepo for codepath projects. It helped me
-      learn and troubleshoot using my local parameters
+      learn and troubleshoot using my local parameters and learning git flow.
 - Give one example of an AI suggestion that was incorrect or misleading (including what
   the AI suggested and how you verified the result).
 
