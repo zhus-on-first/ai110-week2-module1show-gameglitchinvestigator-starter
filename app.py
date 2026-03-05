@@ -36,7 +36,9 @@ def init_session_state(min_val, max_val):
 # ==========================================
 # Submit handler
 # ==========================================
-def handle_submit(low: int, high: int, show_hint: bool):
+def handle_submit(
+    raw_guess: str | None, attempt_limit: int, low: int, high: int, show_hint: bool
+):
     """Handle the guess submission logic."""
     st.session_state.attempts += 1
 
@@ -161,7 +163,13 @@ if st.session_state.status != "playing":
 # Submit handler (call)
 # ==========================================
 if submit:
-    handle_submit(low, high, show_hint)
+    handle_submit(
+        raw_guess=raw_guess,
+        attempt_limit=attempt_limit,
+        low=low,
+        high=high,
+        show_hint=show_hint,
+    )
 
 st.divider()
 st.caption("Built by an AI that claims this code is production-ready.")

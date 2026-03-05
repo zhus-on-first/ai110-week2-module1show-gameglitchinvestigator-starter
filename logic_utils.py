@@ -10,7 +10,7 @@ def get_range_for_difficulty(difficulty: str) -> tuple[int, int]:
 
 
 def parse_guess(
-    raw: str, min_val: int, max_val: int
+    raw: str | None, min_val: int, max_val: int
 ) -> tuple[bool, int | None, str | None]:
     """
     Parse user input into an int guess.
@@ -30,19 +30,22 @@ def parse_guess(
     return True, value, None
 
 
-def check_guess(guess: int, secret: int) -> tuple[str, str]:
+def check_guess(guess: int | None, secret: int) -> tuple[str, str]:
     """
     Compare guess to secret and return (outcome, message).
 
     Outcome examples: "Win", "Too High", "Too Low"
     """
+    if guess is None:
+        return "Invalid", "Enter a valid number."
+
     if guess == secret:
         return "Win", "🎉 Correct!"
 
     if guess > secret:
-        return "Too High", "📈 Go LOWER!"
+        return "Too High", "📉 Go LOWER!"
 
-    return "Too Low", "📉 Go HIGHER!"
+    return "Too Low", "📈 Go HIGHER!"
 
 
 def update_score(current_score: int, outcome: str, attempt_number: int) -> int:
