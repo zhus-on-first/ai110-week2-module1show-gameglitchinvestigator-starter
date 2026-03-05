@@ -1,5 +1,7 @@
 # ==========================================
 # Imports
+# FIX: Extracted game logic functions into logic_utils.py — refactored using
+# Junie agent in PyCharm, diff reviewed before applying
 # ==========================================
 import random
 
@@ -11,10 +13,13 @@ from logic_utils import (
     update_score,
 )
 
-
 # ==========================================
 # Session state initialization
 # ==========================================
+
+
+# FIX: init_session_state now accepts min_val/max_val so initial secret
+# respects difficulty range — identified with Claude, fixed manually
 def init_session_state(min_val, max_val):
     """Initialize session state variables."""
     if "secret" not in st.session_state:
@@ -145,6 +150,8 @@ with col3:
 # ==========================================
 if new_game:
     st.session_state.attempts = 0
+    # FIX: new_game now uses low/high from difficulty instead of hardcoded 1,100
+    # — identified with Claude, fixed manually
     st.session_state.secret = random.randint(low, high)
     st.success("New game started.")
     st.rerun()

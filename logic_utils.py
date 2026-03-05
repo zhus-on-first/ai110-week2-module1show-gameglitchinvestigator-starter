@@ -9,6 +9,8 @@ def get_range_for_difficulty(difficulty: str) -> tuple[int, int]:
     return 1, 100
 
 
+# FIX: Collapsed None/empty checks into single guard; removed float truncation;
+# added bounds validation — identified with Claude, implemented manually
 def parse_guess(
     raw: str | None, min_val: int, max_val: int
 ) -> tuple[bool, int | None, str | None]:
@@ -30,6 +32,8 @@ def parse_guess(
     return True, value, None
 
 
+# FIX: Removed dead TypeError fallback and even/odd attempt type-switching bug;
+# both guess and secret are now always int — identified with Claude, fixed manually
 def check_guess(guess: int | None, secret: int) -> tuple[str, str]:
     """
     Compare guess to secret and return (outcome, message).
@@ -48,6 +52,8 @@ def check_guess(guess: int | None, secret: int) -> tuple[str, str]:
     return "Too Low", "📈 Go HIGHER!"
 
 
+# FIX: Removed arbitrary score penalty for Too High/Too Low — wrong guesses
+# no longer affect score — identified with Claude, fixed manually
 def update_score(current_score: int, outcome: str, attempt_number: int) -> int:
     """Update score based on outcome and attempt number."""
     if outcome == "Win":
