@@ -1,4 +1,4 @@
-def get_range_for_difficulty(difficulty: str):
+def get_range_for_difficulty(difficulty: str) -> tuple[int, int]:
     """Return (low, high) inclusive range for a given difficulty."""
     if difficulty == "Easy":
         return 1, 20
@@ -30,7 +30,7 @@ def parse_guess(
     return True, value, None
 
 
-def check_guess(guess, secret):
+def check_guess(guess: int, secret: int) -> tuple[str, str]:
     """
     Compare guess to secret and return (outcome, message).
 
@@ -45,7 +45,7 @@ def check_guess(guess, secret):
     return "Too Low", "📉 Go HIGHER!"
 
 
-def update_score(current_score: int, outcome: str, attempt_number: int):
+def update_score(current_score: int, outcome: str, attempt_number: int) -> int:
     """Update score based on outcome and attempt number."""
     if outcome == "Win":
         points = 100 - 10 * (attempt_number + 1)
