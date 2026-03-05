@@ -15,13 +15,13 @@ from logic_utils import (
 # ==========================================
 # Session state initialization
 # ==========================================
-def init_session_state():
+def init_session_state(min_val, max_val):
     """Initialize session state variables."""
     if "secret" not in st.session_state:
-        st.session_state.secret = random.randint(1, 100)
+        st.session_state.secret = random.randint(min_val, max_val)
 
     if "attempts" not in st.session_state:
-        st.session_state.attempts = 1
+        st.session_state.attempts = 0
 
     if "score" not in st.session_state:
         st.session_state.score = 0
@@ -97,6 +97,8 @@ difficulty = st.sidebar.selectbox(
     index=1,
 )
 
+low, high = get_range_for_difficulty(difficulty)
+
 attempt_limit_map = {
     "Easy": 6,
     "Normal": 8,
@@ -104,12 +106,10 @@ attempt_limit_map = {
 }
 attempt_limit = attempt_limit_map[difficulty]
 
-low, high = get_range_for_difficulty(difficulty)
-
 st.sidebar.caption(f"Range: {low} to {high}")
 st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
 
-init_session_state()
+init_session_state(low, high)
 
 # ==========================================
 # UI rendering
@@ -143,7 +143,7 @@ with col3:
 # ==========================================
 if new_game:
     st.session_state.attempts = 0
-    st.session_state.secret = random.randint(1, 100)
+    st.session_state.secret = random.randint(low, high)
     st.success("New game started.")
     st.rerun()
 
