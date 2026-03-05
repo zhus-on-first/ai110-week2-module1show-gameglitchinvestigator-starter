@@ -13,12 +13,16 @@ def get_range_for_difficulty(difficulty: str):
     return 1, 100
 
 
-def parse_guess(raw: str) -> tuple[bool, int | None, str | None]:
+def parse_guess(
+    raw: str, min_val: int, max_val: int
+) -> tuple[bool, int | None, str | None]:
     if not raw:
         return False, None, "Enter a guess."
 
     try:
         value = int(raw)
+        if value < min_val or value > max_val:
+            return False, None, f"Guess must be between {min_val} and {max_}"
     except ValueError:
         return False, None, "That is not a number."
 
@@ -141,7 +145,7 @@ if st.session_state.status != "playing":
 if submit:
     st.session_state.attempts += 1
 
-    ok, guess_int, err = parse_guess(raw_guess)
+    ok, guess_int, err = parse_guess(raw_guess, low, high)
 
     if not ok:
         st.session_state.history.append(raw_guess)
